@@ -13,7 +13,11 @@ This mirror includes the IPOPT tree with all subversion externals,
 along with all of the downloads from the ThirdParty/*/get.* source
 code unpacked.
 
-The script get_ipopt_source.sh was used to create the mirror.
+The script get_ipopt_source.sh was used to create the mirror.  It
+applies remove-pedantic-errors.diff to remove a compile flag which
+creates issues with clang.  (The default distribution removes this
+flag already when compling on Darwin, but doesn't check the actual
+compiler in use.)
 
 Note about using IPOPT with MATLAB (Linux specific):
 
