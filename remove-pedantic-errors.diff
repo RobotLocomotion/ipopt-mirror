@@ -1,0 +1,114 @@
+diff -urN CoinIpopt.svn.clean/configure CoinIpopt.svn/configure
+--- CoinIpopt.svn.clean/configure	2016-05-19 10:13:51.958199691 -0400
++++ CoinIpopt.svn/configure	2016-05-26 15:16:25.470821682 -0400
+@@ -2701,7 +2701,7 @@
+           *-darwin*)
+             ;;
+           *)
+-            coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
++            #coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
+             ;;
+         esac
+     esac
+@@ -3572,7 +3572,7 @@
+           *-darwin*)
+             ;;
+           *)
+-            coin_warn_cxxflags="-pedantic-errors $coin_warn_cxxflags"
++            #coin_warn_cxxflags="-pedantic-errors $coin_warn_cxxflags"
+             ;;
+         esac
+     esac
+diff -urN CoinIpopt.svn.clean/Ipopt/configure CoinIpopt.svn/Ipopt/configure
+--- CoinIpopt.svn.clean/Ipopt/configure	2016-05-19 10:13:52.134201709 -0400
++++ CoinIpopt.svn/Ipopt/configure	2016-05-26 15:16:25.686824108 -0400
+@@ -2926,7 +2926,7 @@
+           *-darwin*)
+             ;;
+           *)
+-            coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
++            #coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
+             ;;
+         esac
+     esac
+@@ -3797,7 +3797,7 @@
+           *-darwin*)
+             ;;
+           *)
+-            coin_warn_cxxflags="-pedantic-errors $coin_warn_cxxflags"
++            #coin_warn_cxxflags="-pedantic-errors $coin_warn_cxxflags"
+             ;;
+         esac
+     esac
+diff -urN CoinIpopt.svn.clean/ThirdParty/ASL/configure CoinIpopt.svn/ThirdParty/ASL/configure
+--- CoinIpopt.svn.clean/ThirdParty/ASL/configure	2016-05-19 10:13:54.118224458 -0400
++++ CoinIpopt.svn/ThirdParty/ASL/configure	2016-05-26 15:16:25.586822985 -0400
+@@ -2825,7 +2825,7 @@
+           *-darwin*)
+             ;;
+           *)
+-            coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
++            #coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
+             ;;
+         esac
+     esac
+diff -urN CoinIpopt.svn.clean/ThirdParty/Blas/configure CoinIpopt.svn/ThirdParty/Blas/configure
+--- CoinIpopt.svn.clean/ThirdParty/Blas/configure	2016-05-19 10:13:54.866233035 -0400
++++ CoinIpopt.svn/ThirdParty/Blas/configure	2016-05-26 15:16:25.498821997 -0400
+@@ -2809,7 +2809,7 @@
+           *-darwin*)
+             ;;
+           *)
+-            coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
++            #coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
+             ;;
+         esac
+     esac
+diff -urN CoinIpopt.svn.clean/ThirdParty/HSL/configure CoinIpopt.svn/ThirdParty/HSL/configure
+--- CoinIpopt.svn.clean/ThirdParty/HSL/configure	2016-05-19 10:13:55.630241795 -0400
++++ CoinIpopt.svn/ThirdParty/HSL/configure	2016-05-26 15:16:25.562822715 -0400
+@@ -2842,7 +2842,7 @@
+           *-darwin*)
+             ;;
+           *)
+-            coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
++            #coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
+             ;;
+         esac
+     esac
+diff -urN CoinIpopt.svn.clean/ThirdParty/Lapack/configure CoinIpopt.svn/ThirdParty/Lapack/configure
+--- CoinIpopt.svn.clean/ThirdParty/Lapack/configure	2016-05-19 10:13:56.442251105 -0400
++++ CoinIpopt.svn/ThirdParty/Lapack/configure	2016-05-26 15:16:25.618823344 -0400
+@@ -2825,7 +2825,7 @@
+           *-darwin*)
+             ;;
+           *)
+-            coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
++            #coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
+             ;;
+         esac
+     esac
+diff -urN CoinIpopt.svn.clean/ThirdParty/Metis/configure CoinIpopt.svn/ThirdParty/Metis/configure
+--- CoinIpopt.svn.clean/ThirdParty/Metis/configure	2016-05-19 10:13:57.178259544 -0400
++++ CoinIpopt.svn/ThirdParty/Metis/configure	2016-05-26 15:16:25.642823613 -0400
+@@ -2790,7 +2790,7 @@
+           *-darwin*)
+             ;;
+           *)
+-            coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
++            #coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
+             ;;
+         esac
+     esac
+diff -urN CoinIpopt.svn.clean/ThirdParty/Mumps/configure CoinIpopt.svn/ThirdParty/Mumps/configure
+--- CoinIpopt.svn.clean/ThirdParty/Mumps/configure	2016-05-19 10:13:57.994268900 -0400
++++ CoinIpopt.svn/ThirdParty/Mumps/configure	2016-05-26 15:16:25.530822356 -0400
+@@ -2823,7 +2823,7 @@
+           *-darwin*)
+             ;;
+           *)
+-            coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
++            #coin_warn_cflags="-pedantic-errors $coin_warn_cflags"
+             ;;
+         esac
+     esac
