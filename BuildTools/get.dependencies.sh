@@ -26,7 +26,6 @@ build_dir=$PWD/build
 reconfigure=false
 get_third_party=true
 quiet=false
-MAKE=make
 
 #If this is an already checked out project, which one?
 echo "Welcome to the COIN-OR fetch and build utility"
@@ -46,15 +45,12 @@ do
             case $option in
                 --prefix)
                     if [ "x$option_arg" != x ]; then
-			case $option_arg in
-			    [\\/$]* | ?:[\\/]* | NONE | '' )
-			        prefix=$option_arg
-				;;
-			    *)  
-				echo "Prefix path must be absolute."
-				exit 3
-				;;
-			esac
+			if [[ "$option_arg" = /* ]]; then 
+                            prefix=$option_arg
+			else
+                            echo "Prefix path must be absolute."
+			    exit 3
+			fi
                     else
                         echo "No path provided for --prefix"
                         exit 3
@@ -62,14 +58,12 @@ do
                     ;;
                 --build-dir)
                     if [ "x$option_arg" != x ]; then
-			case $option_arg in
-			    [\\/$]* | ?:[\\/]* | NONE | '' )
-				build_dir=$option_arg
-				;;
-			    *)
-				build_dir=`pwd`/$option_arg
-				;;
-			esac
+			if [[ "$option_arg" = /* ]]; then 
+                            build_dir=$option_arg
+			else
+                            echo "Path to build directory must be absolute."
+			    exit 3
+			fi
                     else
                         echo "No path provided for --build-dir"
                         exit 3
@@ -85,15 +79,12 @@ do
                     ;;
                 DESTDIR)
                     if [ "x$option_arg" != x ]; then
-			case $option_arg in
-			    [\\/$]* | ?:[\\/]* | NONE | '' )
-			        dest_dir=$option_arg
-				;;
-			    *)  
-				echo "DESTDIR path must be absolute."
-				exit 3
-				;;
-			esac
+			if [[ "$option_arg" = /* ]]; then 
+                            dest_dir=$option_arg
+			else
+                            echo "DESTDIR path must be absolute."
+			    exit 3
+			fi
                     else
                         echo "No path provided for DESTDIR"
                         exit 3
@@ -378,21 +369,21 @@ if [ $build = "true" ]; then
             fi
 	    if [ $run_all_tests = "true" ]; then
 		if [ $quiet = "true" ]; then
-		    $MAKE -j $threads > /dev/null
+		    make -j $threads > /dev/null
 		fi
-                $MAKE -j $threads test
+                make -j $threads test
 	    fi
             if [ "x$dest_dir" != x ]; then
 		if [ $quiet = "true" ]; then
-                    $MAKE -j $threads DESTDIR="$dest_dir" install > /dev/null
+                    make -j $threads DESTDIR="$dest_dir" install > /dev/null
 		else
-                    $MAKE -j $threads DESTDIR="$dest_dir" install
+                    make -j $threads DESTDIR="$dest_dir" install
 		fi
             else
 		if [ $quiet = "true" ]; then
-                    $MAKE -j $threads install > /dev/null
+                    make -j $threads install > /dev/null
 		else
-                    $MAKE -j $threads install
+                    make -j $threads install
 		fi
             fi
             cd $root_dir
@@ -423,21 +414,21 @@ if [ $build = "true" ]; then
         fi
 	if [ $run_test = "true" ]; then
 	    if [ $quiet = "true" ]; then
-		$MAKE -j $threads > /dev/null
+		make -j $threads > /dev/null
 	    fi
-            $MAKE -j $threads test
+            make -j $threads test
 	fi
 	if [ "x$dest_dir" != x ]; then
 	    if [ $quiet = "true" ]; then
-		$MAKE -j $threads DESTDIR="$dest_dir" install > /dev/null
+		make -j $threads DESTDIR="$dest_dir" install > /dev/null
 	    else
-		$MAKE -j $threads DESTDIR="$dest_dir" install
+		make -j $threads DESTDIR="$dest_dir" install
 	    fi
 	else
 	    if [ $quiet = "true" ]; then
-		$MAKE -j $threads install > /dev/null
+		make -j $threads install > /dev/null
 	    else
-		$MAKE -j $threads install
+		make -j $threads install
 	    fi
 	fi
         cd $root_dir
@@ -456,22 +447,22 @@ if [ $build = "true" ]; then
 	    fi
         fi
 	if [ $quiet = "true" ]; then
-	    $MAKE -j $threads > /dev/null
+	    make -j $threads > /dev/null
 	fi
 	if [ $run_test = "true" ]; then 
-            $MAKE -j $threads test
+            make -j $threads test
 	fi
 	if [ "x$dest_dir" != x ]; then
 	    if [ $quiet = "true" ]; then
-		$MAKE -j $threads DESTDIR="$dest_dir" install > /dev/null
+		make -j $threads DESTDIR="$dest_dir" install > /dev/null
 	    else
-		$MAKE -j $threads DESTDIR="$dest_dir" install
+		make -j $threads DESTDIR="$dest_dir" install
 	    fi
 	else
 	    if [ $quiet = "true" ]; then
-		$MAKE -j $threads install > /dev/null
+		make -j $threads install > /dev/null
 	    else
-		$MAKE -j $threads install
+		make -j $threads install
 	    fi
 	fi
 	cd $root_dir

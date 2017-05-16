@@ -2,7 +2,7 @@
 # All Rights Reserved.
 # This file is distributed under the Eclipse Public License.
 
-## $Id: configure.ac 2657 2016-04-30 12:06:36Z stefan $
+## $Id: configure.ac 2655 2016-04-30 12:06:01Z stefan $
 
 # Author:  Andreas Waechter            IBM    2006-04-13
 
@@ -12,7 +12,7 @@
 
 AC_PREREQ(2.59)
 
-AC_INIT([Ipopt],[3.12],[http://projects.coin-or.org/Ipopt/newticket])
+AC_INIT([Ipopt],[3.12.5],[http://projects.coin-or.org/Ipopt/newticket])
 
 AC_COPYRIGHT([
 Copyright 2007, 2010 International Business Machines and others.
