@@ -2,7 +2,7 @@
 # All Rights Reserved.
 # This file is distributed under the Eclipse Public License.
 #
-## $Id: coin.m4 3586 2016-05-23 16:38:30Z stefan $
+## $Id: coin.m4 3562 2016-02-06 03:54:09Z tkr $
 #
 # Author: Andreas Wachter    IBM      2006-04-14
 
@@ -3894,26 +3894,17 @@ if test x"$use_blas" != x; then
     # we come to this later
     :
   elif test "$use_blas" != "no"; then
+    AC_MSG_CHECKING([whether user supplied BLASLIB=\"$use_blas\" works])
+    coin_need_flibs=no
     coin_save_LIBS="$LIBS"
     LIBS="$use_blas $LIBS"
-    if test "$F77" != unavailable ; then
-      coin_need_flibs=no
-      AC_MSG_CHECKING([whether user supplied BLASLIB=\"$use_blas\" works])
-      AC_COIN_TRY_FLINK([daxpy],
-                        [if test $coin_need_flibs = yes ; then
-                           use_blas="$use_blas $FLIBS"
-                         fi
-                         AC_MSG_RESULT([yes: $use_blas])],
-                        [AC_MSG_RESULT([no])
-                         AC_MSG_ERROR([user supplied BLAS library \"$use_blas\" does not work])])
-      use_blas="$use_blas $FLIBS"
-      AC_MSG_RESULT([yes: $use_blas])
-    else
-      AC_MSG_NOTICE([checking whether user supplied BLASLIB=\"$use_blas\" works with C linkage])
-      AC_LANG_PUSH(C)
-      AC_CHECK_FUNC([daxpy],[],[AC_MSG_ERROR([user supplied BLAS library \"$use_blas\" does not work])])
-      AC_LANG_POP(C)
-    fi
+    AC_COIN_TRY_FLINK([daxpy],
+                      [if test $coin_need_flibs = yes ; then
+                         use_blas="$use_blas $FLIBS"
+                       fi
+                       AC_MSG_RESULT([yes: $use_blas])],
+                      [AC_MSG_RESULT([no])
+                       AC_MSG_ERROR([user supplied BLAS library \"$use_blas\" does not work])])
     LIBS="$coin_save_LIBS"
   fi
 else
@@ -3963,35 +3954,23 @@ else
         clang* ) ;;
         cl* | */cl* | CL* | */CL* | icl* | */icl* | ICL* | */ICL*)
           coin_save_LIBS="$LIBS"
+          AC_MSG_CHECKING([for BLAS in MKL (32bit)])
           LIBS="mkl_intel_c.lib mkl_sequential.lib mkl_core.lib $LIBS"
-          if test "$F77" != unavailable ; then
-            AC_MSG_CHECKING([for BLAS in MKL (32bit)])
-            AC_COIN_TRY_FLINK([daxpy],
-                              [use_blas='mkl_intel_c.lib mkl_sequential.lib mkl_core.lib'
-                               AC_MSG_RESULT([yes: $use_blas])
-                              ],
-                              [AC_MSG_RESULT([no])])
-          else
-            AC_MSG_NOTICE([for BLAS in MKL (32bit) using C linkage])
-            AC_CHECK_FUNC([daxpy],[use_blas='mkl_intel_c.lib mkl_sequential.lib mkl_core.lib'])
-          fi
+          AC_COIN_TRY_FLINK([daxpy],
+                            [use_blas='mkl_intel_c.lib mkl_sequential.lib mkl_core.lib'
+                             AC_MSG_RESULT([yes: $use_blas])
+                            ],
+                            [AC_MSG_RESULT([no])])
           LIBS="$coin_save_LIBS"
           
           if test "x$use_blas" = x ; then
+            AC_MSG_CHECKING([for BLAS in MKL (64bit)])
             LIBS="mkl_intel_lp64.lib mkl_sequential.lib mkl_core.lib $LIBS"
-            if test "$F77" != unavailable ; then
-              AC_MSG_CHECKING([for BLAS in MKL (64bit)])
-              AC_COIN_TRY_FLINK([daxpy],
-                                [use_blas='mkl_intel_lp64.lib mkl_sequential.lib mkl_core.lib'
-                                 AC_MSG_RESULT([yes: $use_blas])
-                                ],
-                                [AC_MSG_RESULT([no])])
-            else
-              AC_MSG_NOTICE([for BLAS in MKL (64bit) using C linkage])
-              AC_LANG_PUSH(C)
-              AC_CHECK_FUNC([daxpy],[use_blas='mkl_intel_lp64.lib mkl_sequential.lib mkl_core.lib'])
-              AC_LANG_POP(C)
-            fi
+            AC_COIN_TRY_FLINK([daxpy],
+                              [use_blas='mkl_intel_lp64.lib mkl_sequential.lib mkl_core.lib'
+                               AC_MSG_RESULT([yes: $use_blas])
+                              ],
+                              [AC_MSG_RESULT([no])])
             LIBS="$coin_save_LIBS"
           fi
           ;;
@@ -4113,40 +4092,31 @@ if test x"$use_lapack" != x; then
     use_lapack="$use_lapack $BLAS_LIBS"
     coin_save_LIBS="$LIBS"
     LIBS="$use_lapack $LIBS"
-    #AC_COIN_TRY_FLINK([dsyev],
-    #                  [if test $coin_need_flibs = yes ; then
-    #                     use_lapack="$use_lapack $FLIBS"
-    #                   fi
-    #                   AC_MSG_RESULT([yes: $use_lapack])
-    #                  ],
-    #                  [AC_MSG_RESULT([no])
-    #                   AC_MSG_ERROR([user supplied LAPACK library \"$use_lapack\" does not work])])
-    use_lapack="$use_lapack $FLIBS"
-    AC_MSG_RESULT([yes: $use_lapack])
+    AC_COIN_TRY_FLINK([dsyev],
+                      [if test $coin_need_flibs = yes ; then
+                         use_lapack="$use_lapack $FLIBS"
+                       fi
+                       AC_MSG_RESULT([yes: $use_lapack])
+                      ],
+                      [AC_MSG_RESULT([no])
+                       AC_MSG_ERROR([user supplied LAPACK library \"$use_lapack\" does not work])])
     LIBS="$coin_save_LIBS"
   fi
 else
   if test x$coin_has_blas = xyes; then
     # First try to see if LAPACK is already available with BLAS library
+    AC_MSG_CHECKING([whether LAPACK is already available with BLAS library])
     coin_save_LIBS="$LIBS"
+    coin_need_flibs=no
     LIBS="$BLAS_LIBS $LIBS"
-    if test "$F77" != unavailable; then
-      coin_need_flibs=no
-      AC_MSG_CHECKING([whether LAPACK is already available with BLAS library])
-      AC_COIN_TRY_FLINK([dsyev],
-                        [use_lapack="$BLAS_LIBS"
-                         if test $coin_need_flibs = yes ; then
-                           use_lapack="$use_lapack $FLIBS"
-                         fi
-                         AC_MSG_RESULT([yes: $use_lapack])
-                        ],
-                        [AC_MSG_RESULT([no])])
-    else
-      AC_MSG_NOTICE([checking whether LAPACK is already available with BLAS library])
-      AC_LANG_PUSH(C)
-      AC_CHECK_FUNC([dsyev],[use_lapack="$BLAS_LIBS"])
-      AC_LANG_POP(C)
-    fi
+    AC_COIN_TRY_FLINK([dsyev],
+                      [use_lapack="$BLAS_LIBS"
+                       if test $coin_need_flibs = yes ; then
+                         use_lapack="$use_lapack $FLIBS"
+                       fi
+                       AC_MSG_RESULT([yes: $use_lapack])
+                      ],
+                      [AC_MSG_RESULT([no])])
     LIBS="$coin_save_LIBS"
   fi
   if test -z "$use_lapack"; then

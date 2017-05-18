@@ -9,7 +9,7 @@ if [ $(dirname "$0") != "." ]; then
     exit 1
 fi
 
-IPOPT_VERSION=3.12
+IPOPT_VERSION=releases/3.12.5
 
 if [ "$1" = "--rm-before-starting" ]; then
     # Remove upstream's top-level files.
@@ -72,7 +72,7 @@ if [ -r "configure.ac" ]; then
     exit 1
 fi
 
-svn checkout --non-interactive --trust-server-cert https://projects.coin-or.org/svn/Ipopt/stable/$IPOPT_VERSION .
+svn checkout --non-interactive --trust-server-cert https://projects.coin-or.org/svn/Ipopt/$IPOPT_VERSION .
 
 # IPOPT needs to download yet more code for third-party depenencies,
 # so do that now.
@@ -94,4 +94,4 @@ for i in ThirdParty/*; do
     touch downloaded.$THIRD_PARTY_LIB
 done
 
-patch -p1 < remove-pedantic-errors.diff
+patch -p1 --no-backup-if-mismatch < remove-pedantic-errors.diff
