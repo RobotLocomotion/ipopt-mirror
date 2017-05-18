@@ -79,6 +79,11 @@ svn checkout --non-interactive --trust-server-cert https://projects.coin-or.org/
 ORIG_PWD=$PWD
 for i in ThirdParty/*; do
     THIRD_PARTY_LIB=`echo $i | cut -d / -f 2;`
+    if [ "$THIRD_PARTY_LIB" = "Metis" ]; then
+        # For rationale, see RobotLocomotion/drake#4913.
+        echo "Skipping Metis ..."
+        continue
+    fi
     echo Dowloading $THIRD_PARTY_LIB...
     if [ -e downloaded.$THIRD_PARTY_LIB ]; then
 	echo Already downloaded $THIRD_PARTY_LIB
